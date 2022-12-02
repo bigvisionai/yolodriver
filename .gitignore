@@ -1,0 +1,12 @@
+*exp.py
+
+yolov5/*
+YOLOv6/*
+*.zip
+
+runs/*
+weights/*
+
+.idea/*
+__pycache__/*
+*/__pycache__/*
