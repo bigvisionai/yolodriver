@@ -1,13 +1,12 @@
 import os
 import tempfile
 import importlib.util
-import sys
 
 
-from general_utils.common_utils import write_yaml, download_file, add_keys_for_value
-from general_utils.data_utils import update_abs_path_in_yaml, yolov6_write_yaml
+from general_utils.common_utils import download_file, add_keys_for_value
+from general_utils.data_utils import yolov6_write_yaml
 
-from config import NONE_STR, ROOT, LOG_DIR_NAME, TRAIN_DIR_NAME, YOLOV6, YOLO_DATA_KEYS
+from config import NONE_STR, ROOT, LOG_DIR_NAME, TRAIN_DIR_NAME, YOLOV6
 
 
 YOLOV6_DIR = os.path.join(ROOT, YOLOV6)
