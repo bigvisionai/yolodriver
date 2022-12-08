@@ -4,8 +4,8 @@ import importlib.util
 import sys
 
 
-from general_utils.utils import write_yaml, download_file
-from general_utils.data_utils import update_abs_path_in_yaml
+from general_utils.common_utils import write_yaml, download_file, add_keys_for_value
+from general_utils.data_utils import update_abs_path_in_yaml, yolov6_write_yaml
 
 from config import NONE_STR, ROOT, LOG_DIR_NAME, TRAIN_DIR_NAME, YOLOV6, YOLO_DATA_KEYS
 
@@ -13,8 +13,6 @@ from config import NONE_STR, ROOT, LOG_DIR_NAME, TRAIN_DIR_NAME, YOLOV6, YOLO_DA
 YOLOV6_DIR = os.path.join(ROOT, YOLOV6)
 MODEL_DEF_DIR = 'configs'
 
-if str(YOLOV6_DIR) not in sys.path:
-    sys.path.append(str(YOLOV6_DIR))
 
 from YOLOv6.tools.train import get_args_parser, main
 
@@ -37,12 +35,6 @@ def get_download_link(model_pt):
     return f"https://github.com/meituan/YOLOv6/releases/download/{MODEL_DOWNLOAD_TAG}/{model_pt}"
 
 
-def add_keys_to_value(dic, keys, value):
-    for key in keys:
-        dic[key] = value
-    return dic
-
-
 def get_supported_model():
     model_dir = os.path.join(YOLOV6_DIR, MODEL_DEF_DIR)
     files = os.listdir(model_dir)
@@ -62,62 +54,16 @@ def get_supported_model():
             model_ = model_pt.split('.')[0]
             model_str = f'{model_name} | {model_pt}| {model_}'
             models_str.append(model_str)
-            model_to_py = add_keys_to_value(model_to_py, [model_name, model_pt, model_], py_file_path)
-            model_download_link = add_keys_to_value(model_download_link, [model_name, model_pt, model_],
-                                                    get_download_link(model_pt))
-            download_model_path = add_keys_to_value(download_model_path, [model_name, model_pt, model_],
-                                                    model_dic['pretrained'])
+            model_to_py = add_keys_for_value(model_to_py, [model_name, model_pt, model_], py_file_path)
+            model_download_link = add_keys_for_value(model_download_link, [model_name, model_pt, model_],
+                                                     get_download_link(model_pt))
+            download_model_path = add_keys_for_value(download_model_path, [model_name, model_pt, model_],
+                                                     model_dic['pretrained'])
 
     return models_str, model_to_py, model_download_link, download_model_path
 
 
 SUPPORTED_MODELS_STR, MODEL_FINETUNE_PY, MODEL_DOWNLOAD_URL, MODEL_PATH = get_supported_model()
-
-
-def yolo6_path_from_yolov5(images_path, v6_images_path, v6_labels_path):
-    images_path = os.path.normpath(images_path)
-    images_path_splits = images_path.split(os.sep)
-    labels_path_splits = images_path_splits.copy()
-    labels_path_splits[-1] = YOLO_DATA_KEYS.LABELS_DIR_NAME
-    labels_path = os.sep.join(labels_path_splits)
-
-    v6_images_path = os.path.join(v6_images_path, images_path_splits[-2])
-    v6_labels_path = os.path.join(v6_labels_path, images_path_splits[-2])
-
-    # create symlink
-    os.symlink(images_path, v6_images_path, target_is_directory=True)
-    os.symlink(labels_path, v6_labels_path, target_is_directory=True)
-
-    return v6_images_path
-
-
-def yolov6_create_symlink_update_dic(yaml_dic):
-    train = yaml_dic.get(YOLO_DATA_KEYS.TRAIN, None)
-    val = yaml_dic.get(YOLO_DATA_KEYS.VALID, None)
-    test = yaml_dic.get(YOLO_DATA_KEYS.TEST, None)
-
-    parent_data_dir = tempfile.TemporaryDirectory().name
-    v6_images_path = os.path.join(parent_data_dir, YOLO_DATA_KEYS.IMAGES_DIR_NAME)
-    v6_labels_path = os.path.join(parent_data_dir, YOLO_DATA_KEYS.LABELS_DIR_NAME)
-    os.makedirs(v6_images_path, exist_ok=True)
-    os.makedirs(v6_labels_path, exist_ok=True)
-
-    if train:
-        yaml_dic[YOLO_DATA_KEYS.TRAIN] = yolo6_path_from_yolov5(train, v6_images_path, v6_labels_path)
-    if val:
-        yaml_dic[YOLO_DATA_KEYS.VALID] = yolo6_path_from_yolov5(val, v6_images_path, v6_labels_path)
-    if test:
-        yaml_dic[YOLO_DATA_KEYS.TEST] = yolo6_path_from_yolov5(test, v6_images_path, v6_labels_path)
-
-    return parent_data_dir, yaml_dic
-
-
-def yolov6_write_yaml(data_dir, yaml_filename):
-    dic = update_abs_path_in_yaml(data_dir, yaml_filename)
-    data_dir, dic = yolov6_create_symlink_update_dic(dic)
-    data_yaml_path = os.path.join(data_dir, yaml_filename)
-    write_yaml(dic, data_yaml_path)
-    return data_yaml_path
 
 
 def yolov6_train(args):

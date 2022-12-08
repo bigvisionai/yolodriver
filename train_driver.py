@@ -1,15 +1,15 @@
 import argparse
 
-from config import SUPPORTED_MODEL_TYPE, YOLOV5, YOLOV6, NONE_STR, ROOT, LOG_DIR_NAME, TRAIN_DIR_NAME, EXPERIMENT_NAME
-from general_utils.yolov5_utils import yolov5_train
-from general_utils.yolov6_utils import yolov6_train
+from config import SUPPORTED_MODEL_TYPE, NONE_STR, ROOT, LOG_DIR_NAME, TRAIN_DIR_NAME, EXPERIMENT_NAME
+from config import YOLOV5, YOLOV6, YOLOV7
+from general_utils.common_utils import remove_add_dirs_to_sys_path
 
 
 def argument_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_type', type=str, default='YOLOv6',
+    parser.add_argument('--model_type', type=str, default='yolov5',
                         help=f'Which model type? \nSupported Models: \n{SUPPORTED_MODEL_TYPE}')
-    parser.add_argument('--weights', type=str, default='yolov6n.pt', help='Weight filename')
+    parser.add_argument('--weights', type=str, default='YOLOv5n', help='Weight filename')
     parser.add_argument('--data_dir', type=str, default='../yolodriver/yolov5/v_data', help='Dataset directory')
     parser.add_argument('--data_yaml_filename', type=str, default='data.yaml',
                         help='Dataset YAML filename. Must be in data_dir')
@@ -33,11 +33,21 @@ def main():
 
     # yolov5 training
     if opt.model_type == YOLOV5:
-
+        remove_add_dirs_to_sys_path(SUPPORTED_MODEL_TYPE, [YOLOV5])
+        from general_utils.yolov5_utils import yolov5_train
         yolov5_train(opt)
+
     # YOLOv6 training
     if opt.model_type == YOLOV6:
+        remove_add_dirs_to_sys_path(SUPPORTED_MODEL_TYPE, [YOLOV6])
+        from general_utils.yolov6_utils import yolov6_train
         yolov6_train(opt)
+
+    # yolov7 training
+    if opt.model_type == YOLOV7:
+        remove_add_dirs_to_sys_path(SUPPORTED_MODEL_TYPE, [YOLOV7])
+        from general_utils.yolov7_utils import yolov7_train
+        yolov7_train(opt)
 
 
 if __name__ == '__main__':

@@ -2,6 +2,8 @@
 
 yolov5/*
 YOLOv6/*
+yolov7/*
+
 *.zip
 
 runs/*

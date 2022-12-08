@@ -1,7 +1,6 @@
 import os
-import tempfile
-from general_utils.utils import write_yaml
-from general_utils.data_utils import update_abs_path_in_yaml
+from general_utils.common_utils import add_keys_for_value
+from general_utils.data_utils import yolov5_write_yaml
 from config import NONE_STR, ROOT, LOG_DIR_NAME, YOLOV5, TRAIN_DIR_NAME
 
 from yolov5.train import parse_opt, main
@@ -23,34 +22,19 @@ DOWNLOAD_URLS = {
 }
 
 
-def add_keys_value(dic, keys, value):
-    for key in keys:
-        dic[key] = value
-    return dic
-
-
 def supported_weights():
-    supported_weights = dict()
+    supported_weights_dict = dict()
     supported_weights_str = []
     for name, url in DOWNLOAD_URLS.items():
         weight_pt = url.split('/')[-1]
         weight_ = weight_pt.split('.')[0]
         weight_str = f'{name} | {weight_pt} | {weight_}'
         supported_weights_str.append(weight_str)
-        supported_weights = add_keys_value(supported_weights, [name, weight_pt, weight_], weight_pt)
-    return supported_weights, supported_weights_str
+        supported_weights_dict = add_keys_for_value(supported_weights_dict, [name, weight_pt, weight_], weight_pt)
+    return supported_weights_dict, supported_weights_str
 
 
 SUPPORTED_WEIGHTS, SUPPORTED_WEIGHTS_STR = supported_weights()
-
-
-def yolov5_write_yaml(data_dir, yaml_filename):
-    dic = update_abs_path_in_yaml(data_dir, yaml_filename)
-    parent_data_dir = tempfile.TemporaryDirectory().name
-    os.makedirs(parent_data_dir, exist_ok=True)
-    data_yaml_save_path = os.path.join(parent_data_dir, yaml_filename)
-    write_yaml(dic, data_yaml_save_path)
-    return data_yaml_save_path
 
 
 def yolov5_train(args):
