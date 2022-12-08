@@ -77,7 +77,7 @@ def yolov6_train(args):
     if output_dir == NONE_STR:
         output_dir = os.path.join(ROOT, LOG_DIR_NAME, YOLOV6, TRAIN_DIR_NAME)
 
-    opt = get_args_parser().parse_args()
+    opt = get_args_parser().parse_known_args()[0]
     opt.data_path = data_yaml_path
     opt.conf_file = finetune_py_file
     opt.image_size = args.image_size
@@ -96,12 +96,3 @@ def yolov6_train(args):
     return
 
 
-if __name__ == '__main__':
-    # p = 'C:\Users\Prakash\pc\work\yolodriver\yolov5\v_data\train\images'
-    path = 'C:\\Users\\Prakash\\pc\\work\\yolodriver\\yolov5\\v_data\\train\\images'
-    data_dir = tempfile.TemporaryDirectory().name
-    images_dir = os.path.join(data_dir, 'images')
-    labels_dir = os.path.join(data_dir, 'labels')
-    os.makedirs(images_dir, exist_ok=True)
-    os.makedirs(labels_dir, exist_ok=True)
-    print(yolo6_path_from_yolov5(path, images_dir, labels_dir))

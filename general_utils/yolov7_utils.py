@@ -90,7 +90,7 @@ def yolov7_train(args):
     if output_dir == NONE_STR:
         output_dir = os.path.join(ROOT, LOG_DIR_NAME, YOLOV7, TRAIN_DIR_NAME)
 
-    opt = parse_opt()
+    opt = parse_opt(known=True)
     opt.data = data_yaml_path
     model_key = SUPPORTED_WEIGHTS[args.weights]
     download_url = DOWNLOAD_URLS[model_key]

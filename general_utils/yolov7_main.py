@@ -20,7 +20,7 @@ from train import train
 logger = logging.getLogger(__name__)
 
 
-def parse_opt():
+def parse_opt(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str, default='yolo7.pt', help='initial weights path')
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')
@@ -59,7 +59,7 @@ def parse_opt():
     parser.add_argument('--freeze', nargs='+', type=int, default=[0],
                         help='Freeze layers: backbone of yolov7=50, first3=0 1 2')
     parser.add_argument('--v5-metric', action='store_true', help='assume maximum recall as 1.0 in AP calculation')
-    opt = parser.parse_args()
+    opt = parser.parse_known_args()[0] if known else parser.parse_args()
     return opt
 
 
