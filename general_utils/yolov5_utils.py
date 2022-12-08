@@ -47,7 +47,7 @@ def yolov5_train(args):
     if output_dir == NONE_STR:
         output_dir = os.path.join(ROOT, LOG_DIR_NAME, YOLOV5, TRAIN_DIR_NAME)
 
-    opt = parse_opt()
+    opt = parse_opt(known=True)
     opt.data = yaml_write_path
     opt.weights = os.path.join(WEIGHT_DIR, SUPPORTED_WEIGHTS[args.weights])
     opt.img = args.image_size

@@ -10,7 +10,7 @@ def argument_parser():
     parser.add_argument('--model_type', type=str, default='yolov5',
                         help=f'Which model type? \nSupported Models: \n{SUPPORTED_MODEL_TYPE}')
     parser.add_argument('--weights', type=str, default='YOLOv5n', help='Weight filename')
-    parser.add_argument('--data_dir', type=str, default='../yolodriver/yolov5/v_data', help='Dataset directory')
+    parser.add_argument('--data_dir', type=str, default='../v_data', help='Dataset directory')
     parser.add_argument('--data_yaml_filename', type=str, default='data.yaml',
                         help='Dataset YAML filename. Must be in data_dir')
     parser.add_argument('--image_size', type=int, default=640, help='Image size (in pixels)')
