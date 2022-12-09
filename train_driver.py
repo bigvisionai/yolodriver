@@ -5,7 +5,7 @@ from config import YOLOV5, YOLOV6, YOLOV7
 from general_utils.common_utils import remove_add_dirs_to_sys_path
 
 
-def argument_parser():
+def argument_parser(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_type', type=str, default='yolov7',
                         help=f'Which model type? \nSupported Models: \n{SUPPORTED_MODEL_TYPE}')
@@ -16,18 +16,17 @@ def argument_parser():
     parser.add_argument('--image_size', type=int, default=640, help='Image size (in pixels)')
     parser.add_argument('--epochs', type=int, default=2, help='Max epochs to train')
     parser.add_argument('--batch_size', type=int, default=2, help='Batch size')
-    parser.add_argument('--eval_interval', type=int, default=1, help='Evaluation interval')
     parser.add_argument('--device', type=str, default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--output_dir', type=str, default=NONE_STR,
                         help=f'Path to save logs and trained-model. Default is '
                              f'{ROOT}/{LOG_DIR_NAME}/model_type/{TRAIN_DIR_NAME}')
     parser.add_argument('--exp_name', type=str, default=EXPERIMENT_NAME, help='Name of the experiment.')
 
-    return parser.parse_args()
+    opt = parser.parse_known_args()[0] if known else parser.parse_args()
+    return opt
 
 
-def main():
-    opt = argument_parser()
+def main(opt):
     assert opt.model_type in SUPPORTED_MODEL_TYPE, 'Model type: {} is not supported. Supported Models: {}'.\
         format(opt.model_type, SUPPORTED_MODEL_TYPE)
 
@@ -51,7 +50,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    args = argument_parser()
+    main(args)
 
 
 
