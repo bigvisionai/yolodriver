@@ -81,7 +81,7 @@ def yolov6_train(args):
     opt.data_path = data_yaml_path
     opt.conf_file = finetune_py_file
     opt.image_size = args.image_size
-    opt.eval_interval = args.eval_interval
+    opt.eval_interval = 1
     opt.epochs = args.epochs
     opt.batch_size = args.batch_size
     opt.device = args.device
