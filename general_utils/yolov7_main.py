@@ -15,7 +15,6 @@ from utils.general import increment_path, fitness, get_latest_run, check_file, p
 from utils.plots import plot_evolution
 from utils.torch_utils import select_device
 from utils.wandb_logging.wandb_utils import check_wandb_resume
-from train import train
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +63,16 @@ def parse_opt(known=False):
 
 
 def main(opt):
+    # There is different train method for p5 and p6 model
+    index = opt.weights.find('yolov7')
+    if '6' in opt.weights[index:]:
+        print(f'if: {opt.weights}')
+        from train_aux import train
+
+    else:
+        print(f'else: {opt.weights}')
+        from train import train
+
     # Set DDP variables
     opt.world_size = int(os.environ['WORLD_SIZE']) if 'WORLD_SIZE' in os.environ else 1
     opt.global_rank = int(os.environ['RANK']) if 'RANK' in os.environ else -1
@@ -203,4 +212,7 @@ def main(opt):
         plot_evolution(yaml_file)
         print(f'Hyperparameter evolution complete. Best results saved as: {yaml_file}\n'
               f'Command to train a new model with these hyperparameters: $ python train.py --hyp {yaml_file}')
+
+
+
 

@@ -7,9 +7,9 @@ from general_utils.common_utils import remove_add_dirs_to_sys_path
 
 def argument_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_type', type=str, default='yolov5',
+    parser.add_argument('--model_type', type=str, default='yolov7',
                         help=f'Which model type? \nSupported Models: \n{SUPPORTED_MODEL_TYPE}')
-    parser.add_argument('--weights', type=str, default='YOLOv5n', help='Weight filename')
+    parser.add_argument('--weights', type=str, default='YOLOv7w6', help='Weight filename')
     parser.add_argument('--data_dir', type=str, default='../v_data', help='Dataset directory')
     parser.add_argument('--data_yaml_filename', type=str, default='data.yaml',
                         help='Dataset YAML filename. Must be in data_dir')
