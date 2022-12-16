@@ -1,5 +1,12 @@
 import os
 import tempfile
+import sys
+
+root = os.path.dirname(__file__)
+root = os.path.dirname(root)
+
+if root not in sys.path:
+    sys.path.insert(0, root)
 
 from train_driver import argument_parser, main
 from general_utils.common_utils import unzip, download_file
