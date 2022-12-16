@@ -3,12 +3,15 @@
 yolov5/*
 YOLOv6/*
 yolov7/*
-
+yolov5/setup.cfg
 *.zip
 
 runs/*
 weights/*
 
+
 .idea/*
 __pycache__/*
 */__pycache__/*
+/test/weights/
+/test/.pytest_cache/

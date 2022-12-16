@@ -65,7 +65,16 @@ def remove_add_dirs_to_sys_path(remove, add):
     for d in remove:
         abs_path = os.path.join(root, d)
         if abs_path in sys.path:
-            sys.path.remove(abs_path)
+            while abs_path in sys.path:
+                sys.path.remove(abs_path)
+        modules_to_remove = []
+        for key in sys.modules:
+            if hasattr(sys.modules[key], '__file__') and \
+                    str(abs_path) in str(sys.modules[key].__file__):
+                modules_to_remove.append(key)
+        for key in modules_to_remove:
+            del sys.modules[key]
+
     for d in add:
         abs_path = os.path.join(root, d)
         if abs_path not in sys.path:
