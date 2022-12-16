@@ -117,4 +117,3 @@ class YoloDataAttributes:
 
 
 YOLO_DATA_KEYS = YoloDataAttributes()
-

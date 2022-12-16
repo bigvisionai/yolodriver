@@ -80,4 +80,3 @@ def remove_add_dirs_to_sys_path(remove, add):
         if abs_path not in sys.path:
             sys.path.insert(0, abs_path)
     return
-

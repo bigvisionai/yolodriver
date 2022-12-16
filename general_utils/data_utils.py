@@ -97,4 +97,3 @@ def yolov6_write_yaml(data_dir, yaml_filename):
 
 # YOLO-v6 and YOLO-v7 has the same data format
 yolov7_write_yaml = yolov6_write_yaml
-

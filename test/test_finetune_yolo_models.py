@@ -62,8 +62,3 @@ def test_yolov7_training():
     args.batch_size = 2
     args.device = 'cpu'
     main(args)
-
-
-
-
-

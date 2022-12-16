@@ -5,12 +5,9 @@ from config import NONE_STR, ROOT, LOG_DIR_NAME, YOLOV7, TRAIN_DIR_NAME
 from general_utils.data_utils import yolov7_write_yaml
 from config import YOLO_DATA_KEYS
 
-
-YOLOV7_DIR = os.path.join(ROOT, YOLOV7)
-
-
 from general_utils.yolov7_main import parse_opt, main
 
+YOLOV7_DIR = os.path.join(ROOT, YOLOV7)
 
 WEIGHT_DIR = 'weights'
 

@@ -1,7 +1,5 @@
 import os
-import tempfile
 import importlib.util
-
 
 from general_utils.common_utils import download_file, add_keys_for_value
 from general_utils.data_utils import yolov6_write_yaml
