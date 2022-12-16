@@ -6,12 +6,10 @@ from general_utils.data_utils import yolov6_write_yaml
 
 from config import NONE_STR, ROOT, LOG_DIR_NAME, TRAIN_DIR_NAME, YOLOV6
 
+from YOLOv6.tools.train import get_args_parser, main
 
 YOLOV6_DIR = os.path.join(ROOT, YOLOV6)
 MODEL_DEF_DIR = 'configs'
-
-
-from YOLOv6.tools.train import get_args_parser, main
 
 
 """
@@ -92,5 +90,3 @@ def yolov6_train(args):
 
     main(opt)
     return
-
-

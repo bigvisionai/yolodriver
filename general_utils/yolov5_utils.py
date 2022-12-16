@@ -58,7 +58,3 @@ def yolov5_train(args):
 
     main(opt)
     return
-
-
-
-
