@@ -100,6 +100,7 @@ def yolov7_train(args):
     opt.batch_size = args.batch_size
     opt.project = output_dir
     opt.name = args.exp_name
+    opt.device = args.device
 
     ############################
     model_yaml_path = get_model_yaml_file(model_key)

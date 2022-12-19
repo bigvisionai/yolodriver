@@ -55,6 +55,7 @@ def yolov5_train(args):
     opt.batch_size = args.batch_size
     opt.project = output_dir
     opt.name = args.exp_name
+    opt.device = args.device
 
     main(opt)
     return
