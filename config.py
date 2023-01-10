@@ -100,6 +100,7 @@ download_all_model_code()
 NONE_STR = ''
 LOG_DIR_NAME = 'runs'
 TRAIN_DIR_NAME = 'train'
+INFER_DIR_NAME = 'inference'
 EXPERIMENT_NAME = 'exp'
 CPU_STR = 'cpu'
 
