@@ -7,13 +7,13 @@ from general_utils.common_utils import remove_add_dirs_to_sys_path
 
 def argument_parser(known=False):
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_type', type=str, default='yolov7',
+    parser.add_argument('--model_type', type=str, default='yolov5',
                         help=f'Which model type? \nSupported Models: \n{SUPPORTED_MODEL_TYPE}')
-    parser.add_argument('--weights', type=str, default='YOLOv7tiny', help='Weight filename')
+    parser.add_argument('--weights', type=str, default='yolov5n.pt', help='Weight filename')
     parser.add_argument('--data_dir', type=str, default='../v_data', help='Dataset directory')
     parser.add_argument('--data_yaml_filename', type=str, default='data.yaml',
                         help='Dataset YAML filename. Must be in data_dir')
-    parser.add_argument('--image_size', type=int, default=640, help='Image size (in pixels)')
+    parser.add_argument('--image_size', type=int, default=412, help='Image size (in pixels)')
     parser.add_argument('--epochs', type=int, default=2, help='Max epochs to train')
     parser.add_argument('--batch_size', type=int, default=2, help='Batch size')
     parser.add_argument('--device', type=str, default='cpu', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')

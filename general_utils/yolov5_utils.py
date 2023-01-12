@@ -51,7 +51,7 @@ def yolov5_train(args):
     opt = parse_opt(known=True)
     opt.data = yaml_write_path
     opt.weights = os.path.join(WEIGHT_DIR, SUPPORTED_WEIGHTS[args.weights])
-    opt.img = args.image_size
+    opt.imgsz = args.image_size
     opt.epochs = args.epochs
     opt.batch_size = args.batch_size
     opt.project = output_dir
