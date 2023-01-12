@@ -128,3 +128,10 @@ def print_args(args: Optional[dict] = None, show_file=True, show_func=False):
     s = (f'{file}: ' if show_file else '') + (f'{func}: ' if show_func else '')
     print(colorstr(s) + ', '.join(f'{k}={v}' for k, v in args.items()))
 
+
+def is_model_pt_file_exist(filepath):
+    if os.path.isfile(filepath):
+        if os.path.splitext(filepath)[1] == '.pt':
+            return True
+    return False
+

@@ -1,6 +1,6 @@
 import os
 import argparse
-from general_utils.common_utils import add_keys_for_value, print_args
+from general_utils.common_utils import add_keys_for_value, print_args, is_model_pt_file_exist
 from general_utils.data_utils import yolov5_write_yaml
 from config import NONE_STR, ROOT, LOG_DIR_NAME, YOLOV5, TRAIN_DIR_NAME, INFER_DIR_NAME
 
@@ -98,13 +98,18 @@ def infer_parse_opt(known=False):
 
 
 def yolov5_infer(args):
-    supported_weights_str = '\n'.join(SUPPORTED_WEIGHTS_STR)
-    weight_name = os.path.basename(args.weights)
-    assert weight_name in SUPPORTED_WEIGHTS, f'Weight {args.weights} is not supported. ' \
-                                             f'Supported weights:\n {supported_weights_str}'
-    dir_name = os.path.dirname(args.weights)
-    if dir_name == '':
-        dir_name = WEIGHT_DIR
+    pt_exist = is_model_pt_file_exist(args.weights)
+    if not pt_exist:
+        supported_weights_str = '\n'.join(SUPPORTED_WEIGHTS_STR)
+        weight_name = os.path.basename(args.weights)
+        assert weight_name in SUPPORTED_WEIGHTS, f'Weight {args.weights} is not supported. ' \
+                                                 f'Supported weights:\n {supported_weights_str}'
+        dir_name = os.path.dirname(args.weights)
+        if dir_name == '':
+            dir_name = WEIGHT_DIR
+        weights_path = os.path.join(dir_name, SUPPORTED_WEIGHTS[weight_name])
+    else:
+        weights_path = args.weights
 
     output_dir = args.output_dir
     if output_dir == NONE_STR:
@@ -112,7 +117,7 @@ def yolov5_infer(args):
 
     opt = infer_parse_opt(known=True)
 
-    opt.weights = os.path.join(dir_name, SUPPORTED_WEIGHTS[weight_name])
+    opt.weights = weights_path
 
     opt.source = args.source
     opt.data = args.data_yaml_path

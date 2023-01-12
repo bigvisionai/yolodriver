@@ -9,7 +9,7 @@ def argument_parser(known=False):
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_type', type=str, default='yolov5',
                         help=f'Which model type? \nSupported Models: \n{SUPPORTED_MODEL_TYPE}')
-    parser.add_argument('--weights', type=str, default='weights/yolov5n.pt', help='Weight filepath')
+    parser.add_argument('--weights', type=str, default='runs/yolov5/train/exp14/weights/best.pt', help='Weight filepath')
     parser.add_argument('--source', type=str, default='../v_data/valid/images',
                         help='file/dir/URL/glob/screen/0(webcam)')
     parser.add_argument('--data_yaml_path', type=str, default='../v_data/data.yaml',
