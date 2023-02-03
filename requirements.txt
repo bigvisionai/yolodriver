@@ -51,3 +51,11 @@ thop  # FLOPs computation
 pycocotools>=2.0  # COCO mAP
 # roboflow
 # ultralytics  # HUB https://hub.ultralytics.com
+
+# docs dev requirements
+mkdocs
+mkdocstrings
+mkdocs-material
+
+
+

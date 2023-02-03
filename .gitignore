@@ -16,3 +16,7 @@ __pycache__/*
 /test/weights/
 /test/.pytest_cache/
 /yolov5/setup.cfg
+
+test/*/exp*
+*.pt
+*.out
