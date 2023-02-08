@@ -152,7 +152,7 @@ python infer_driver.py --model_type yolov5
                        --weights path/to/weight
                        --source image/dir/path or video/path or image/path
                        --data_yaml_path data/YAML/path
-                       --image_size [640]
+                       --image_size 640 640
                        --conf_thres 0.25
                        --iou_thres 0.45
                        --device cpu
