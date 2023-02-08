@@ -17,8 +17,10 @@ RUN alias python=python3
 # Install pip packages
 COPY requirements.txt .
 RUN python3 -m pip install --upgrade pip wheel
-RUN pip install --no-cache -r requirements.txt ultralytics albumentations gsutil notebook \
-    coremltools onnx onnx-simplifier onnxruntime tensorflow-cpu tensorflowjs \
+RUN pip install --no-cache -r requirements.txt  \
+    ultralytics albumentations gsutil notebook \
+    coremltools onnx onnx-simplifier onnxruntime  \
+    # tensorflow-cpu tensorflowjs \
     # openvino-dev \
     --extra-index-url https://download.pytorch.org/whl/cpu
 
@@ -35,7 +37,7 @@ ENV DEBIAN_FRONTEND teletype
 # Usage Examples -------------------------------------------------------------------------------------------------------
 
 # Build and Push
-# t=opencvcourses/yolodriver:cup-0.1 && sudo docker build -f docker/Dockerfile-cpu -t $t . && sudo docker push $t
+# t=opencvcourses/yolodriver:cpu-0.1 && sudo docker build -f docker/Dockerfile-cpu -t $t . && sudo docker push $t
 
 # Pull and Run
 # t=opencvcourses/yolodriver:cpu-0.1 && sudo docker pull $t && sudo docker run -it --ipc=host -v "$(pwd)"/datasets:/usr/src/datasets $t
